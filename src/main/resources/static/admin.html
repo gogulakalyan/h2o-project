@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H2O Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="admin-body">
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">📊</div>
+        <div>
+          <div class="eyebrow">Operations center</div>
+          <h1>H2O Admin</h1>
+        </div>
+      </div>
+      <nav class="top-actions">
+        <a class="ghost-link" href="index.html">Back to store</a>
+      </nav>
+    </header>
+
+    <section class="glass-card admin-grid">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Overview</p>
+          <h3>Business analytics</h3>
+        </div>
+        <button class="solid-btn" onclick="loadAdminDashboard()">Refresh</button>
+      </div>
+      <div id="analyticsGrid" class="cards"></div>
+    </section>
+
+    <section class="dashboard-columns">
+      <div class="glass-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Orders</p>
+            <h3>Recent customer orders</h3>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Item</th>
+                <th>Service</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Driver</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="glass-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Inventory input</p>
+            <h3>Add product</h3>
+          </div>
+        </div>
+        <div class="stack-gap">
+          <input id="adminProductBrand" placeholder="Brand" />
+          <input id="adminProductName" placeholder="Product name" />
+          <select id="adminServiceType">
+            <option value="DRINKING_WATER">Drinking Water</option>
+            <option value="SOFT_DRINK">Soft Drink</option>
+          </select>
+          <input id="adminArea" placeholder="Area" />
+          <input id="adminPincode" placeholder="Pincode" />
+          <input id="adminPrice" type="number" placeholder="Price" />
+          <input id="adminStock" type="number" placeholder="Stock" />
+          <button class="solid-btn wide" onclick="addProductFromAdmin()">Add Product</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+  <script src="script.js"></script>
+  <script>loadAdminDashboard();</script>
+</body>
+</html>

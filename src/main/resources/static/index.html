@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>H2O • Water Delivery</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">💧</div>
+        <div>
+          <div class="eyebrow">Quick delivery</div>
+          <h1>H2O</h1>
+        </div>
+      </div>
+      <nav class="top-actions">
+        <a class="ghost-link" href="admin.html">Admin Dashboard</a>
+        <button class="ghost-btn" onclick="openAuthModal('login')">Login</button>
+        <button class="solid-btn" onclick="openAuthModal('signup')">Sign up</button>
+      </nav>
+    </header>
+
+    <section class="hero-panel">
+      <div>
+        <span class="badge">Tanker • Drinking Water • Soft Drinks</span>
+        <h2>Order essentials in minutes with a cleaner, smarter delivery experience.</h2>
+        <p>Search by city and area, compare options, pay online or choose cash on delivery, and manage everything from one dashboard.</p>
+        <div class="hero-stats">
+          <div><strong>24/7</strong><span>bookings</span></div>
+          <div><strong>3</strong><span>service lines</span></div>
+          <div><strong>Live</strong><span>analytics</span></div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="mini-chip">Fastest in Hyderabad</div>
+        <h3>Popular search</h3>
+        <p>20L drinking water cans in Kukatpally</p>
+        <button class="solid-btn wide" onclick="quickFill('Hyderabad','Kukatpally')">Use this location</button>
+      </div>
+    </section>
+
+    <section class="search-panel glass-card">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Delivery details</p>
+          <h3>Set your search preferences</h3>
+        </div>
+        <div id="userBadge" class="user-badge">Guest mode</div>
+      </div>
+
+      <div class="input-grid">
+        <input id="customerName" placeholder="Your full name" />
+        <input id="customerPhone" placeholder="Phone number" />
+        <input id="customerEmail" placeholder="Email address" />
+        <select id="city">
+          <option value="Hyderabad">Hyderabad</option>
+        </select>
+        <input id="location" placeholder="Area or pincode" />
+        <select id="paymentMethod">
+          <option value="COD">Cash on Delivery</option>
+          <option value="ONLINE">Pay Online</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="service-switch">
+      <button class="tab active" onclick="switchTab('tanker', this)">🚛 Tankers</button>
+      <button class="tab" onclick="switchTab('drinking', this)">💧 Drinking Water</button>
+      <button class="tab" onclick="switchTab('softdrink', this)">🥤 Soft Drinks</button>
+      <button class="tab" onclick="switchTab('track', this)">📦 Track Order</button>
+    </section>
+
+    <main class="content-grid">
+      <section id="tanker" class="tab-content active glass-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Commercial or residential</p>
+            <h3>Book a tanker</h3>
+          </div>
+          <div class="inline-actions">
+            <select id="usageType">
+              <option value="RESIDENTIAL">Residential</option>
+              <option value="COMMERCIAL">Commercial</option>
+            </select>
+            <button class="solid-btn" onclick="searchTankers()">Search Tankers</button>
+          </div>
+        </div>
+        <div id="tankerResults" class="cards"></div>
+      </section>
+
+      <section id="drinking" class="tab-content glass-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Bulk water cans and bottles</p>
+            <h3>Drinking Water</h3>
+          </div>
+          <button class="solid-btn" onclick="searchProducts('DRINKING_WATER', 'drinkingResults')">Search Products</button>
+        </div>
+        <div id="drinkingResults" class="cards"></div>
+      </section>
+
+      <section id="softdrink" class="tab-content glass-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Bulk beverage ordering</p>
+            <h3>Soft Drinks</h3>
+          </div>
+          <button class="solid-btn" onclick="searchProducts('SOFT_DRINK', 'softdrinkResults')">Search Products</button>
+        </div>
+        <div id="softdrinkResults" class="cards"></div>
+      </section>
+
+      <section id="track" class="tab-content glass-card">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">Track your booking</p>
+            <h3>Order tracking</h3>
+          </div>
+        </div>
+        <div class="inline-actions">
+          <input id="trackOrderId" placeholder="Enter order ID" />
+          <button class="solid-btn" onclick="trackOrder()">Track Order</button>
+          <button class="ghost-btn" onclick="loadMyOrders()">My Orders</button>
+        </div>
+        <div id="trackingResult" class="cards" style="margin-top: 16px;"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <div id="authModal" class="modal hidden">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeAuthModal()">×</button>
+      <p id="authModeLabel" class="eyebrow">Welcome back</p>
+      <h3 id="authTitle">Login to continue</h3>
+      <div id="signupNameWrap">
+        <input id="authFullName" placeholder="Full name" />
+      </div>
+      <input id="authEmail" placeholder="Email" />
+      <input id="authPhone" placeholder="Phone (for sign up)" />
+      <input id="authPassword" type="password" placeholder="Password" />
+      <button id="authSubmitBtn" class="solid-btn wide" onclick="submitAuth()">Continue</button>
+      <button class="ghost-btn wide" onclick="toggleAuthMode()">Switch</button>
+      <p class="muted small">Demo admin account: admin@h2o.com / admin123</p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <div id="toast" class="toast hidden"></div>
+  <div id="toast" class="toast hidden"></div>
+  <strong data-count="1200" data-prefix="₹">₹0</strong>
+<strong data-count="3">0</strong>
+</body>
+</html>
