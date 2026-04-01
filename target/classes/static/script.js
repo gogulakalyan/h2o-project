@@ -4,13 +4,16 @@ let paymentConfig = { enabled: false, keyId: "" };
 function openAdminDashboard() {
   const user = getStoredUser();
 
-  if (!user || user.role !== "ADMIN") {
+  if (!user || user.email !== "admin@h2o.com") {
     showToast("Access denied. Admin only.", "error");
     return;
   }
 
   window.location.href = "admin.html";
 }
+
+
+  
 function switchTab(tabId, btn) {
   document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
@@ -435,7 +438,7 @@ window.onload = async function () {
 const adminBtn = document.querySelector(".ghost-link");
 const user = getStoredUser();
 
-if (adminBtn && (!user || user.role !== "ADMIN")) {
+if (adminBtn && (!user || user.email !== "admin@h2o.com")) {
   adminBtn.style.display = "none";
 }
 };
