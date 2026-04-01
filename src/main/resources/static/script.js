@@ -1,7 +1,16 @@
 const apiBase = `${window.location.origin}/api`;
 let authMode = "login";
 let paymentConfig = { enabled: false, keyId: "" };
+function openAdminDashboard() {
+  const user = getStoredUser();
 
+  if (!user || user.role !== "ADMIN") {
+    showToast("Access denied. Admin only.", "error");
+    return;
+  }
+
+  window.location.href = "admin.html";
+}
 function switchTab(tabId, btn) {
   document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
   document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
@@ -422,7 +431,16 @@ window.onload = async function () {
   }
   if (document.getElementById('analyticsGrid')) loadAnalytics();
   if (document.getElementById('ordersTable')) loadAdminOrders();
+
+const adminBtn = document.querySelector(".ghost-link");
+const user = getStoredUser();
+
+if (adminBtn && (!user || user.role !== "ADMIN")) {
+  adminBtn.style.display = "none";
+}
 };
+
+  
 function showToast(msg) {
   const t = document.getElementById("toast");
   t.innerText = msg;

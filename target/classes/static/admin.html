@@ -8,6 +8,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  if (document.getElementById('ordersTable')) loadAdminOrders();
+
+const adminBtn = document.querySelector(".ghost-link");
+const user = getStoredUser();
+
+if (adminBtn && (!user || user.role !== "ADMIN")) {
+  adminBtn.style.display = "none";
+}
+};
 </head>
 <body class="admin-body">
   <div class="app-shell">
