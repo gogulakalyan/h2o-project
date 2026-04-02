@@ -385,18 +385,11 @@ async function loadAdminOrders() {
 }
 
 async function addProductFromAdmin() {
-  const payload = {
-    city: 'Hyderabad',
-    area: document.getElementById('adminArea').value.trim(),
-    pincode: document.getElementById('adminPincode').value.trim(),
-    brand: document.getElementById('adminProductBrand').value.trim(),
-    name: document.getElementById('adminProductName').value.trim(),
-    unit: 'custom',
-    price: Number(document.getElementById('adminPrice').value),
-    stock: Number(document.getElementById('adminStock').value),
-    available: true,
-    serviceType: document.getElementById('adminServiceType').value
-  };
+  const brand = document.getElementById("adminProductBrand").value.trim();
+  const name = document.getElementById("adminProductName").value.trim();
+  const serviceType = document.getElementById("adminServiceType").value;
+  const area = document.getElementById("adminArea").value.trim();
+  const pincode = document.getElementById("adminPincode").value.trim();
 
   const res = await fetch(`${apiBase}/admin/products`, {
     method: 'POST',
